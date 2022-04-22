@@ -59,5 +59,5 @@ S 仅由小写英文字母组成。
 let test = ''
 
 console.time('执行用时');
-console.log(xxx(test));
+console.log(removeDuplicates('aacacabb')); // caca
 console.timeEnd('执行用时');
