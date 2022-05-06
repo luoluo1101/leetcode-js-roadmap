@@ -42,9 +42,9 @@ myStack.empty(); // 返回 False
 每次调用 pop 和 top 都保证栈不为空
  */
 // * 思路：初始化两个队列，其中队列2作为备用队列
-// *        push时往队列1push；pop时若队1为空，交换队1和队2，此时若队1有值，队1的循环push进队2但留下队尾
-// *        堆顶则使用自定义的pop方法拿出队尾，需再push进队1
-// *        是否为空，需同时判断队1和队2
+// *        入栈时往队列1 push；出栈时若队1为空，交换队1和队2，此时若队1有值，队1的循环push进队2但留下最后一个元素
+// *        堆顶：使用自定义的pop方法拿出队尾，需再push进队1
+// *        是否为空：需同时判断队1和队2
 
 var MyStack = function() {
     this.queue1 = []
@@ -99,3 +99,58 @@ console.log(myStack.top()); // 返回 2
 console.log(myStack.pop()); // 返回 2
 console.log(myStack.empty()); // 返回 False
 console.timeEnd('执行用时');
+
+
+
+//** 使用一个队列实现栈
+// ** 思路：入栈的时候直接push进队列就行，出栈的时候将除了最后一个元素外的元素全部加入到队尾
+var MyStack1 = function() {
+    this.queue1 = []
+};
+
+/** 
+ * @param {number} x
+ * @return {void}
+ */
+MyStack1.prototype.push = function(x) {
+    this.queue1.push(x)
+};
+
+/**
+ * @return {number}
+ */
+MyStack1.prototype.pop = function() {
+    // while(this.queue1.length){ // 直接这样判断会陷入死循环，因为一直在更改this.queue1
+    //     this.queue1.push(this.queue1.shift())
+    // }
+    let len = this.queue1.length
+    while(len > 1){
+        this.queue1.push(this.queue1.shift())
+        len--
+    }
+    return this.queue1.shift()
+};
+
+/**
+ * @return {number}
+ */
+MyStack1.prototype.top = function() {
+    const x = this.pop()
+    this.queue1.push(x)
+    return x
+};
+
+/**
+ * @return {boolean}
+ */
+MyStack1.prototype.empty = function() {
+    return !this.queue1.length
+};
+console.time('执行用时1');
+let myStack1 = new MyStack1();
+myStack1.push(1);
+myStack1.push(2);
+console.log(myStack1.top()); // 返回 2
+console.log(myStack1.pop()); // 返回 2
+console.log(myStack1.empty()); // 返回 False
+console.timeEnd('执行用时1');
