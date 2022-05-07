@@ -73,12 +73,16 @@ MyQueue.prototype.pop = function() {
  * @return {number}
  */
 MyQueue.prototype.peek = function() {
-    if(this.stack2.length){
-        return this.stack2[this.stack2.length-1]
-    }
-    if(this.stack1.length){
-        return this.stack1[0]
-    }
+    // if(this.stack2.length){
+    //     return this.stack2[this.stack2.length-1]
+    // }
+    // if(this.stack1.length){
+    //     return this.stack1[0]
+    // }
+    // 修改：复用pop
+    const x = this.pop()
+    this.stack2.push(x)
+    return x
 };
 
 /**
