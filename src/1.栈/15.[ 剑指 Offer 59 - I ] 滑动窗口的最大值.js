@@ -31,7 +31,7 @@
 var maxSlidingWindow = function(nums, k) {
     // 获取数组里最大的值
     function getMax(arr=[]){
-        let maxNum = 0
+        let maxNum = -Infinity // 取最大值，初始化比较的值不能是0，应是-Infinity
         for(let i=0; i<arr.length; i++){
             maxNum = Math.max(maxNum, arr[i])
         }
@@ -54,7 +54,9 @@ var maxSlidingWindow = function(nums, k) {
 
 // 测试用例
 let nums = [1,3,-1,-3,5,3,6,7], k = 3
+let nums1 = [1, -1], k1 = 1
 
 console.time('执行用时');
-console.log(maxSlidingWindow(nums, k));
+// console.log(maxSlidingWindow(nums, k)); // [ 3, 3, 5, 5, 6, 7 ]
+console.log(maxSlidingWindow(nums1, k1));
 console.timeEnd('执行用时');
