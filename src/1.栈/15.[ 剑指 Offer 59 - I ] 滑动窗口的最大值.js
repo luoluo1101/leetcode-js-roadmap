@@ -58,5 +58,40 @@ let nums1 = [1, -1], k1 = 1
 
 console.time('执行用时');
 // console.log(maxSlidingWindow(nums, k)); // [ 3, 3, 5, 5, 6, 7 ]
-console.log(maxSlidingWindow(nums1, k1));
+// console.log(maxSlidingWindow(nums1, k1));
 console.timeEnd('执行用时');
+
+
+
+// *思路：创建窗口队列（值为数组的index），循环数组，保证窗口队列单调递减，当窗口移动时去掉首元素（保证窗口队列长度为k）
+//        取最大值时，取窗口首元素index对应的nums数值
+//        若当前元素为i，队首元素应变更为 i-k+1
+/**
+ * @param {number[]} nums
+ * @param {number} k
+ * @return {number[]}
+ */
+ var maxSlidingWindow1 = function(nums, k) {
+    const window = [];
+    const result = [];
+    for (let i = 0; i < nums.length; i++) {
+        // 删除队列中小于当前元素的值，保证队列单调递减，队首是最大元素。
+        while (window.length && nums[i] > nums[window[window.length - 1]]) {
+            window.pop();
+        }
+        // 加入新元素
+        window.push(i);
+        // 不在窗口中时，将队首移出
+        if (window[0] < i - k + 1) {
+            window.shift();
+        }
+        // 此时窗口已形成，可以开始移动
+        if (i >= k - 1) {
+            // 将当前窗口中的最大元素计入结果
+            result.push(nums[window[0]]);
+        }
+    }
+    return result;
+};
+
+console.log(maxSlidingWindow1(nums, k)); // [ 3, 3, 5, 5, 6, 7 ]
